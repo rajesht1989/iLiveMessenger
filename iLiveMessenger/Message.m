@@ -11,52 +11,21 @@
 
 @implementation Message
 
-+ (instancetype)message:(NSString *)strMessage {
-    Message *message = [[Message alloc] init];
-    [message setContent:strMessage];
-    [message setFrom:[[Controller sharedController] user]];
-    return message;
-}
-
 + (instancetype)messageWithDictionary:(NSDictionary *)dictionary identifier:(NSString *)identifier {
-    Message *message = [[Message alloc] init];
-    [message setIdentifier:identifier];
-    [message setContent:dictionary[@"content"]];
-    [message setCreatedAt:[dictionary[@"created_at"] integerValue]];
-    [message setFrom:dictionary[@"from"]];
-    [message setUpdatedAt:[dictionary[@"updated_at"] integerValue]];
-    [message setSeen:[dictionary[@"seen"] boolValue]];
-    [message setIsFromMe:[message.from isEqualToString:[[Controller sharedController] user]]];
-    return message;
+    return [[self alloc] initWithDictionary:dictionary identifier:identifier];
 }
 
-- (NSString *)senderId {
-    return self.from;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary identifier:(NSString *)identifier {
+    if (self = [super initWithSenderId:dictionary[@"from"] senderDisplayName:dictionary[@"from"] date:[[self class] dateWithFirebaseDate:dictionary[@"created_at"]] text:dictionary[@"content"]]) {
+        [self setSeen:[dictionary[@"seen"] boolValue]];
+        [self setIdentifier:identifier];
+        [self setIsFromMe:[self.senderId isEqualToString:[[Controller sharedController] user]]];
+    }
+    return self;
 }
 
-- (NSString *)senderDisplayName {
-    return self.from;
++ (NSDate *)dateWithFirebaseDate:(NSNumber *)dateNumber {
+    return [NSDate dateWithTimeIntervalSince1970:[dateNumber integerValue]/1000];
 }
-
-- (NSDate *)date {
-    return [NSDate date];
-}
-
-- (BOOL)isMediaMessage {
-    return NO;
-}
-
-- (NSUInteger)messageHash {
-    return 0;
-}
-
-- (NSString *)text {
-    return self.content;
-}
-
-- (id<JSQMessageMediaData>)media {
-    return nil;
-}
-
 
 @end

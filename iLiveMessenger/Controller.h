@@ -23,6 +23,6 @@
 - (void)validateChatAndGetListOfMessages:(NSString *)chatId completion:(void (^)(NSMutableArray <Message *>*array))completion;
 - (void)createChat:(NSString *)chatId;
 - (Firebase *)registerForChat:(NSString *)chatId completion:(void (^)(Message *message))completion;
-- (void)sendMessage:(Message *)message chatId:(NSString *)chatId;
+- (void)sendMessage:(NSString *)message chatId:(NSString *)chatId;
 
 @end

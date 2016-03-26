@@ -96,7 +96,7 @@
 
 - (Firebase *)registerForChat:(NSString *)chatId completion:(void (^)(Message *message))completion {
     Firebase *firebaseChild = [[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId];
-    [firebaseChild observeEventType:FEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FDataSnapshot *snapshot, NSString *prevKey){
+    [[firebaseChild queryLimitedToFirst:50] observeEventType:FEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FDataSnapshot *snapshot, NSString *prevKey){
         NSLog(@"%@",snapshot.value);
         if ([snapshot exists]) {
             NSDictionary *dictionary = snapshot.value;
@@ -111,8 +111,8 @@
     return firebaseChild;
 }
 
-- (void)sendMessage:(Message *)message chatId:(NSString *)chatId{
-    [[[[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId] childByAutoId] setValue:@{@"from":message.from,@"content":message.content,@"created_at":kFirebaseServerValueTimestamp}];
+- (void)sendMessage:(NSString *)message chatId:(NSString *)chatId{
+    [[[[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId] childByAutoId] setValue:@{@"content":message,@"from":[[Controller sharedController] user],@"created_at":kFirebaseServerValueTimestamp}];
 }
 
 
