@@ -96,7 +96,7 @@
 
 - (Firebase *)registerForChat:(NSString *)chatId completion:(void (^)(Message *message))completion {
     Firebase *firebaseChild = [[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId];
-    [[firebaseChild queryLimitedToFirst:50] observeEventType:FEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FDataSnapshot *snapshot, NSString *prevKey){
+    [[firebaseChild queryLimitedToLast:20] observeEventType:FEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FDataSnapshot *snapshot, NSString *prevKey){
         NSLog(@"%@",snapshot.value);
         if ([snapshot exists]) {
             NSDictionary *dictionary = snapshot.value;
