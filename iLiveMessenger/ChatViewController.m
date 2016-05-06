@@ -79,7 +79,6 @@
 {
     [[Controller sharedController] sendMessage:text chatId:_chatId];
     [self finishSendingMessage];
-    [self setShowTypingIndicator:YES];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
