@@ -18,11 +18,16 @@
 }
 
 @property (strong, nonatomic) NSMutableArray<Message *>*messages;
-@property (strong, nonatomic) Firebase *firebase;
+@property (strong, nonatomic) Firebase *chatRef;
+@property (strong, nonatomic) Firebase *otherUserRefInMe;
+@property (strong, nonatomic) Firebase *myRefInOtherUser;
+@property (strong, nonatomic) Firebase *myTypingRef;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (strong, nonatomic)  NSString *chatId;
+
+@property(nonatomic, strong) NSTimer *typingTracker;
 
 @end
 
@@ -39,36 +44,43 @@
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
     bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor darkGrayColor]];
     bubbleImageIncoming = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor purpleColor]];
-    
-    /*
-    [[Controller sharedController] validateChatAndGetListOfMessages:_chatId completion:^(NSMutableArray<Message *> *array) {
-        if (!array) {
-            [[Controller sharedController] createChat:_chatId];
-        }
-        _messages = [NSMutableArray array];
-        [self.collectionView reloadData];
-        _firebase = [[Controller sharedController] registerForChat:_chatId completion:^(Message *message) {
-            [_messages addObject:message];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[_messages indexOfObject:message] inSection:0];
-            [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
-            [self scrollToBottomAnimated:YES];
-        }];
-    }];
-    */
+
     _messages = [NSMutableArray array];
-    _firebase = [[Controller sharedController] registerForChat:_chatId completion:^(Message *message) {
+    _chatRef = [[Controller sharedController] registerForChat:_chatId completion:^(Message *message) {
         [_messages addObject:message];
         [self finishReceivingMessage];
     }];
-    /*
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self setShowTypingIndicator:YES];
-    });
-     */
+    
+    _myRefInOtherUser = [[[Controller sharedController] firebase] childByAppendingPath:[NSString stringWithFormat:@"users/%@/list/%@",[Controller sharedController].user,_toUser]];
+    _otherUserRefInMe = [[[Controller sharedController] firebase] childByAppendingPath:[NSString stringWithFormat:@"users/%@/list/%@",_toUser,[Controller sharedController].user]];
+    
+    //For Typing indicator
+    [[_otherUserRefInMe childByAppendingPath:@"typing"] observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        if ([snapshot exists]) {
+            [self setShowTypingIndicator:[snapshot.value boolValue]];
+        }
+    }];
+    
+    _myTypingRef = [_myRefInOtherUser childByAppendingPath:@"typing"];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:UITextViewTextDidChangeNotification object:self.inputToolbar.contentView.textView queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [_typingTracker invalidate];
+        _typingTracker = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(markMeStoppedTyping) userInfo:nil repeats:NO];
+        [_myTypingRef setValue:@(YES)];
+    }];
+}
+
+- (void)markMeStoppedTyping {
+    [_myTypingRef setValue:@(NO)];
+}
+
+- (void)setShowTypingIndicator:(BOOL)showTypingIndicator {
+    [super setShowTypingIndicator:showTypingIndicator];
+    [self scrollToBottomAnimated:showTypingIndicator];
 }
 
 - (void)dealloc {
-    [_firebase removeAllObservers];
+    [_chatRef removeAllObservers];
 }
 
 - (void)didPressSendButton:(UIButton *)button
@@ -79,6 +91,18 @@
 {
     [[Controller sharedController] sendMessage:text chatId:_chatId];
     [self finishSendingMessage];
+    [self markMeStoppedTyping];
+    NSDictionary *listContent = @{@"content" : text , @"name" : self.senderId, @"time" : kFirebaseServerValueTimestamp};
+    [_myRefInOtherUser updateChildValues:listContent];
+    [_otherUserRefInMe updateChildValues:listContent];
+    [[_otherUserRefInMe childByAppendingPath:@"unreadcount"] runTransactionBlock:^FTransactionResult *(FMutableData *currentData) {
+        NSNumber *value = currentData.value;
+        if (currentData.value == [NSNull null]) {
+            value = 0;
+        }
+        [currentData setValue:[NSNumber numberWithInt:(1 + [value intValue])]];
+        return [FTransactionResult successWithValue:currentData];
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

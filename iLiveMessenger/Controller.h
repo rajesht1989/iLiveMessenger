@@ -12,10 +12,11 @@
 
 @interface Controller : NSObject
 
+@property(nonatomic, strong)NSString *user;
+@property (nonatomic, strong) Firebase *firebase;
+
 + (Controller *)sharedController;
 + (NSString *)chatIdForToUser:(NSString *)toUser;
-
-@property(nonatomic, strong)NSString *user;
 
 - (void)addUser:(NSString *)user;
 - (Firebase *)getAllUser:(void (^)(NSArray *array))completion;

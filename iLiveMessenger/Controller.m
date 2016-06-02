@@ -11,8 +11,6 @@
 
 @interface Controller ()
 
-@property (nonatomic, strong) Firebase *firebase;
-
 @end
 
 @implementation Controller
@@ -45,9 +43,9 @@
 
 - (void)validateUser:(NSString *)user completion:(void (^)(BOOL isValid))completion {
     Firebase *firebaseChild = [[_firebase childByAppendingPath:@"users"] childByAppendingPath:user];
-    FirebaseHandle handle = [firebaseChild observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [firebaseChild observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
         NSLog(@"%@",snapshot.value);
-        [firebaseChild removeObserverWithHandle:handle];
+        [firebaseChild removeAllObservers];
         if ([snapshot exists]) {
             completion(YES);
         } else {
