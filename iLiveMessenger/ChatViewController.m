@@ -18,10 +18,10 @@
 }
 
 @property (strong, nonatomic) NSMutableArray<Message *>*messages;
-@property (strong, nonatomic) Firebase *chatRef;
-@property (strong, nonatomic) Firebase *otherUserRefInMe;
-@property (strong, nonatomic) Firebase *myRefInOtherUser;
-@property (strong, nonatomic) Firebase *myTypingRef;
+@property (strong, nonatomic) FIRDatabaseReference *chatRef;
+@property (strong, nonatomic) FIRDatabaseReference *otherUserRefInMe;
+@property (strong, nonatomic) FIRDatabaseReference *myRefInOtherUser;
+@property (strong, nonatomic) FIRDatabaseReference *myTypingRef;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -51,17 +51,17 @@
         [self finishReceivingMessage];
     }];
     
-    _myRefInOtherUser = [[[Controller sharedController] firebase] childByAppendingPath:[NSString stringWithFormat:@"users/%@/list/%@",[Controller sharedController].user,_toUser]];
-    _otherUserRefInMe = [[[Controller sharedController] firebase] childByAppendingPath:[NSString stringWithFormat:@"users/%@/list/%@",_toUser,[Controller sharedController].user]];
+    _myRefInOtherUser = [[[Controller sharedController] firebase] child:[NSString stringWithFormat:@"users/%@/list/%@",[Controller sharedController].user,_toUser]];
+    _otherUserRefInMe = [[[Controller sharedController] firebase] child:[NSString stringWithFormat:@"users/%@/list/%@",_toUser,[Controller sharedController].user]];
     
     //For Typing indicator
-    [[_otherUserRefInMe childByAppendingPath:@"typing"] observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    [[_otherUserRefInMe child:@"typing"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         if ([snapshot exists]) {
             [self setShowTypingIndicator:[snapshot.value boolValue]];
         }
     }];
     
-    _myTypingRef = [_myRefInOtherUser childByAppendingPath:@"typing"];
+    _myTypingRef = [_myRefInOtherUser child:@"typing"];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextViewTextDidChangeNotification object:self.inputToolbar.contentView.textView queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         [_typingTracker invalidate];
@@ -92,16 +92,16 @@
     [[Controller sharedController] sendMessage:text chatId:_chatId];
     [self finishSendingMessage];
     [self markMeStoppedTyping];
-    NSDictionary *listContent = @{@"content" : text , @"name" : self.senderId, @"time" : kFirebaseServerValueTimestamp};
+    NSDictionary *listContent = @{@"content" : text , @"name" : self.senderId, @"time" : FIRServerValue.timestamp};
     [_myRefInOtherUser updateChildValues:listContent];
     [_otherUserRefInMe updateChildValues:listContent];
-    [[_otherUserRefInMe childByAppendingPath:@"unreadcount"] runTransactionBlock:^FTransactionResult *(FMutableData *currentData) {
+    [[_otherUserRefInMe child:@"unreadcount"] runTransactionBlock:^FIRTransactionResult * _Nonnull(FIRMutableData * _Nonnull currentData) {
         NSNumber *value = currentData.value;
         if (currentData.value == [NSNull null]) {
             value = 0;
         }
         [currentData setValue:[NSNumber numberWithInt:(1 + [value intValue])]];
-        return [FTransactionResult successWithValue:currentData];
+        return [FIRTransactionResult successWithValue:currentData];
     }];
 }
 

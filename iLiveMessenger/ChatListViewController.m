@@ -12,7 +12,7 @@
 @interface ChatListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *array;
-@property (strong, nonatomic) Firebase *firebase;
+@property (strong, nonatomic) FIRDatabaseReference *firebase;
 @property (strong, nonatomic) NSString *toUser;
 
 @end

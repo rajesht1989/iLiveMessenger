@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6389F4BFC8F3708AD1DDE515 /* Pods_iLiveMessenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F7C2E37E7761265247C1EA0 /* Pods_iLiveMessenger.framework */; };
 		92453E381C9918DF00BDADA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 92453E371C9918DF00BDADA9 /* main.m */; };
 		92453E3B1C9918DF00BDADA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92453E3A1C9918DF00BDADA9 /* AppDelegate.m */; };
 		92453E3E1C9918DF00BDADA9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92453E3D1C9918DF00BDADA9 /* ViewController.m */; };
@@ -20,11 +21,12 @@
 		9280316B1C9A6F0300489698 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 9280316A1C9A6F0300489698 /* Controller.m */; };
 		9280316E1C9A6F2200489698 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9280316D1C9A6F2200489698 /* LaunchViewController.m */; };
 		928031711C9BD2B100489698 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 928031701C9BD2B100489698 /* Message.m */; };
-		B0E8305A5ABBE07ED20DA67E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C488508BBFF291A977519685 /* libPods.a */; };
+		92B1F5731E514A3600DE8C6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B1F5721E514A3600DE8C6E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2A8ACD1B65E76C5758C5A56A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		252C24B65604FB1C6CDDFB61 /* Pods-iLiveMessenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLiveMessenger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iLiveMessenger/Pods-iLiveMessenger.debug.xcconfig"; sourceTree = "<group>"; };
+		6F7C2E37E7761265247C1EA0 /* Pods_iLiveMessenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iLiveMessenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92453E331C9918DF00BDADA9 /* iLiveMessenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLiveMessenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92453E371C9918DF00BDADA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		92453E391C9918DF00BDADA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -49,8 +51,8 @@
 		9280316D1C9A6F2200489698 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
 		9280316F1C9BD2B100489698 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		928031701C9BD2B100489698 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		C488508BBFF291A977519685 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFC2DEE49E13E33D2AC8A2C7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		92B1F5721E514A3600DE8C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EE683C4BBD33FAF0FF4E5391 /* Pods-iLiveMessenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLiveMessenger.release.xcconfig"; path = "Pods/Target Support Files/Pods-iLiveMessenger/Pods-iLiveMessenger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0E8305A5ABBE07ED20DA67E /* libPods.a in Frameworks */,
+				6389F4BFC8F3708AD1DDE515 /* Pods_iLiveMessenger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,8 +70,8 @@
 		2334423042AF0E57B8633057 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DFC2DEE49E13E33D2AC8A2C7 /* Pods.debug.xcconfig */,
-				2A8ACD1B65E76C5758C5A56A /* Pods.release.xcconfig */,
+				252C24B65604FB1C6CDDFB61 /* Pods-iLiveMessenger.debug.xcconfig */,
+				EE683C4BBD33FAF0FF4E5391 /* Pods-iLiveMessenger.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -77,7 +79,7 @@
 		6E7C471387B18C4F62AA7247 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C488508BBFF291A977519685 /* libPods.a */,
+				6F7C2E37E7761265247C1EA0 /* Pods_iLiveMessenger.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -106,12 +108,7 @@
 				928031681C9A6ECD00489698 /* Model */,
 				928031671C9A6EBC00489698 /* Controller */,
 				928031661C9A6EA300489698 /* ViewController */,
-				92453E391C9918DF00BDADA9 /* AppDelegate.h */,
-				92453E3A1C9918DF00BDADA9 /* AppDelegate.m */,
-				92453E3F1C9918DF00BDADA9 /* Main.storyboard */,
-				92453E421C9918DF00BDADA9 /* Assets.xcassets */,
-				92453E441C9918DF00BDADA9 /* LaunchScreen.storyboard */,
-				92453E471C9918DF00BDADA9 /* Info.plist */,
+				92B1F5741E514CB700DE8C6E /* Interface */,
 				92453E361C9918DF00BDADA9 /* Supporting Files */,
 			);
 			path = iLiveMessenger;
@@ -120,6 +117,11 @@
 		92453E361C9918DF00BDADA9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				92453E391C9918DF00BDADA9 /* AppDelegate.h */,
+				92453E3A1C9918DF00BDADA9 /* AppDelegate.m */,
+				92453E421C9918DF00BDADA9 /* Assets.xcassets */,
+				92453E471C9918DF00BDADA9 /* Info.plist */,
+				92B1F5721E514A3600DE8C6E /* GoogleService-Info.plist */,
 				92453E371C9918DF00BDADA9 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -162,6 +164,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		92B1F5741E514CB700DE8C6E /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				92453E3F1C9918DF00BDADA9 /* Main.storyboard */,
+				92453E441C9918DF00BDADA9 /* LaunchScreen.storyboard */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,12 +180,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92453E4A1C9918DF00BDADA9 /* Build configuration list for PBXNativeTarget "iLiveMessenger" */;
 			buildPhases = (
-				0B0CC1B30518C1795C43DB5E /* Check Pods Manifest.lock */,
+				0B0CC1B30518C1795C43DB5E /* [CP] Check Pods Manifest.lock */,
 				92453E2F1C9918DF00BDADA9 /* Sources */,
 				92453E301C9918DF00BDADA9 /* Frameworks */,
 				92453E311C9918DF00BDADA9 /* Resources */,
-				A2ECC2EC36B2A44DA93AB966 /* Embed Pods Frameworks */,
-				0999267F221956AEBD8F8643 /* Copy Pods Resources */,
+				A2ECC2EC36B2A44DA93AB966 /* [CP] Embed Pods Frameworks */,
+				0999267F221956AEBD8F8643 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,11 +202,13 @@
 		92453E2B1C9918DF00BDADA9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Org;
 				TargetAttributes = {
 					92453E321C9918DF00BDADA9 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = RDBAA992Q3;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -225,55 +238,56 @@
 				92453E461C9918DF00BDADA9 /* LaunchScreen.storyboard in Resources */,
 				92453E431C9918DF00BDADA9 /* Assets.xcassets in Resources */,
 				92453E411C9918DF00BDADA9 /* Main.storyboard in Resources */,
+				92B1F5731E514A3600DE8C6E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0999267F221956AEBD8F8643 /* Copy Pods Resources */ = {
+		0999267F221956AEBD8F8643 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLiveMessenger/Pods-iLiveMessenger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0B0CC1B30518C1795C43DB5E /* Check Pods Manifest.lock */ = {
+		0B0CC1B30518C1795C43DB5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		A2ECC2EC36B2A44DA93AB966 /* Embed Pods Frameworks */ = {
+		A2ECC2EC36B2A44DA93AB966 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLiveMessenger/Pods-iLiveMessenger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -331,8 +345,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -375,8 +391,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -402,21 +420,25 @@
 		};
 		92453E4B1C9918DF00BDADA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFC2DEE49E13E33D2AC8A2C7 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 252C24B65604FB1C6CDDFB61 /* Pods-iLiveMessenger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RDBAA992Q3;
 				INFOPLIST_FILE = iLiveMessenger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.org.iLiveMessenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4aafef38-910e-4874-beb4-c985dea01e4a";
+				PROVISIONING_PROFILE_SPECIFIER = WildCard;
 			};
 			name = Debug;
 		};
 		92453E4C1C9918DF00BDADA9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A8ACD1B65E76C5758C5A56A /* Pods.release.xcconfig */;
+			baseConfigurationReference = EE683C4BBD33FAF0FF4E5391 /* Pods-iLiveMessenger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iLiveMessenger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.org.iLiveMessenger;

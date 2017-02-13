@@ -32,18 +32,20 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [self setFirebase:[[Firebase alloc] initWithUrl:@"https://livemessenger.firebaseio.com/"]];
+        [self setFirebase:[[FIRDatabase database] reference]];
+         
+//         [[FIRDatabaseReference alloc] initWithUrl:@"https://livemessenger.firebaseio.com/"]];
     }
     return self;
 }
 
 - (void)addUser:(NSString *)user {
-    [[_firebase childByAppendingPath:@"users"] updateChildValues:@{user:@{@"createdAt":kFirebaseServerValueTimestamp}}];
+    [[_firebase child:@"users"] updateChildValues:@{user:@{@"createdAt":FIRServerValue.timestamp}}];
 }
 
 - (void)validateUser:(NSString *)user completion:(void (^)(BOOL isValid))completion {
-    Firebase *firebaseChild = [[_firebase childByAppendingPath:@"users"] childByAppendingPath:user];
-    [firebaseChild observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    FIRDatabaseReference *firebaseChild = [[_firebase child:@"users"] child:user];
+    [firebaseChild observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSLog(@"%@",snapshot.value);
         [firebaseChild removeAllObservers];
         if ([snapshot exists]) {
@@ -54,9 +56,9 @@
     }];
 }
 
-- (Firebase *)getAllUser:(void (^)(NSArray *array))completion {
-    Firebase *firebaseChild = [_firebase childByAppendingPath:@"users"];
-    FirebaseHandle handle = [firebaseChild observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+- (FIRDatabaseReference *)getAllUser:(void (^)(NSArray *array))completion {
+    FIRDatabaseReference *firebaseChild = [_firebase child:@"users"];
+    FIRDatabaseHandle handle = [firebaseChild observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSLog(@"%@, %lu",snapshot.value,(unsigned long)handle);
         NSMutableArray *array = [NSMutableArray array];
         for(NSString *aKey in snapshot.value) {
@@ -68,8 +70,8 @@
 }
 
 - (void)validateChatAndGetListOfMessages:(NSString *)chatId completion:(void (^)(NSMutableArray <Message *>*array))completion {
-    Firebase *firebaseChild = [[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId];
-    [firebaseChild observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+    FIRDatabaseReference *firebaseChild = [[_firebase child:@"chats"] child:chatId];
+    [firebaseChild observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSLog(@"%@",snapshot.value);
         [firebaseChild removeAllObservers];
         if ([snapshot exists]) {
@@ -89,12 +91,12 @@
 }
 
 - (void)createChat:(NSString *)chatId {
-    [[_firebase childByAppendingPath:@"chats"] updateChildValues:@{chatId:@{@"created_at":kFirebaseServerValueTimestamp}}];
+    [[_firebase child:@"chats"] updateChildValues:@{chatId:@{@"created_at":FIRServerValue.timestamp}}];
 }
 
-- (Firebase *)registerForChat:(NSString *)chatId completion:(void (^)(Message *message))completion {
-    Firebase *firebaseChild = [[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId];
-    [[firebaseChild queryLimitedToLast:20] observeEventType:FEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FDataSnapshot *snapshot, NSString *prevKey){
+- (FIRDatabaseReference *)registerForChat:(NSString *)chatId completion:(void (^)(Message *message))completion {
+    FIRDatabaseReference *firebaseChild = [[_firebase child:@"chats"] child:chatId];
+    [[firebaseChild queryLimitedToLast:20] observeEventType:FIRDataEventTypeChildAdded andPreviousSiblingKeyWithBlock:^(FIRDataSnapshot *snapshot, NSString *prevKey){
         NSLog(@"%@",snapshot.value);
         if ([snapshot exists]) {
             NSDictionary *dictionary = snapshot.value;
@@ -110,7 +112,7 @@
 }
 
 - (void)sendMessage:(NSString *)message chatId:(NSString *)chatId{
-    [[[[_firebase childByAppendingPath:@"chats"] childByAppendingPath:chatId] childByAutoId] setValue:@{@"content":message,@"from":[[Controller sharedController] user],@"created_at":kFirebaseServerValueTimestamp}];
+    [[[[_firebase child:@"chats"] child:chatId] childByAutoId] setValue:@{@"content":message,@"from":[[Controller sharedController] user],@"created_at":FIRServerValue.timestamp}];
 }
 
 
